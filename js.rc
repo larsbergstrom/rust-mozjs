@@ -15,7 +15,6 @@ extern crate serialize;
 
 use std::libc;
 use std::cast;
-use std::ptr;
 use std::ptr::null;
 use std::result::{Result, Ok, Err};
 use std::libc::c_uint;
@@ -126,12 +125,12 @@ pub unsafe fn JS_SET_RVAL(_cx: *JSContext, vp: *JSVal, v: JSVal) {
 
 #[inline(alwyas)]
 pub unsafe fn JS_THIS_OBJECT(cx: *JSContext, vp: *mut JSVal) -> *JSObject {
-    let r = JSVAL_TO_OBJECT(
-        if JSVAL_IS_PRIMITIVE(*(&*vp.offset(1))) {
+    let r =
+        if (*(&*vp.offset(1))).is_primitive() {
             JS_ComputeThis(cx, &*vp)
         } else {
             *(&*vp.offset(1))
-        });
+        };
     r.to_object_or_null()
 }
 
