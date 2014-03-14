@@ -326,6 +326,7 @@ impl to_jsstr for ~str {
 #[cfg(test)]
 pub mod test {
     use super::rt;
+    use super::{CxUtils, RtUtils};
     use super::super::global;
     use super::super::jsapi::{JS_GC, JS_GetRuntime};
 
